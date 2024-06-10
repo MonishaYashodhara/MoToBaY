@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block 'main' %}
+{% load static %}
+<!--Start Main section-->
+
+<div class="row">
+  <h2 style="background-color: silver;color: black;text-align: center;height: 50px;margin-top: -8px;"><i class="bi bi-cart"></i> My Cart </h2>
+    {% if err %}
+     {{err}}
+    {% endif %}
+    <div class="col-md-12">
+
+    
+      
+      {% for x in data %}
+      {% if quotemsg %}
+         Hiiiii
+      {% endif %}
+      <div class="row">
+        <div class="col-md-3 mt-5">
+          <img src="{{x.pid.image.url}}" alt="" height="230px" width="">
+        </div>
+        <div class="col-md-8 mt-7">
+          <div class="row">
+            <div class="col-md-5">
+          <br><p><b>Brand:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.pid.brand}}</p>
+          <p><b>Color:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.pid.color}}</p>
+          <p><b>Year:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.pid.Launch_Date}}</p>
+          <p><b>Fuel Type:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.pid.Fuel_Type}}</p>
+          <p><b>Price</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.pid.price}}</p>
+          {% if x.pid.bcategory.name == 'Cars' %}
+
+          <!--{% if not quotation_sent %}-->
+          <!-- Display "Send Quotation" button if quotation has not been sent -->
+         <a href="/sendquote/{{x.pid.id}}" class="btn btn-primary">Send Quotation</a>
+          <!--<button id="quotationButton{{ x.id }}" onclick="sendQuotation({{ x.id }})">Send Quotation</button>-->
+          <a href="/remove/{{ x.id }}" class="btn btn-danger btn-sm" id="removeButton">Remove</a><br>
+         <!--{% else %}-->
+          <!-- Display "Quotation Sent" message if quotation has been sent -->
+          <!--<p style="font-weight: bold; color: green;">Quotation Sent</p>-->
+         {% endif %}
+
+        <!--<button id="quotationButton" href="/sendquotaion/{{x.id}}">Send Quotation</button>-->
+            
+          
+         {% else %}
+          <a href="/remove/{{ x.id }}" class="btn btn-danger btn-sm" >Remove</a><br>
+         {% endif %}
+          </div><br>
+          <div class="col-md-4">
+            <b style="margin-left: 39px;">Quantity</b><br>
+            <a href="/updateqty/0/{{x.id}}"><button class="btn btn-" style="width: 15px;height:px;font-weight: bolder;"><i class="bi bi-dash-circle-fill"></i></button></a>
+            <input type="number" value="{{x.qty}}" style="width: 70px;">
+            <a href="/updateqty/1/{{x.id}}"><button class="btn btn-" style="width: 15px;height:px;font-weight: bolder;margin-left: -15px;"><i class="bi bi-plus-circle-fill"></i></button></a>          
+          </div>
+          <div class="col-md-3">
+             <b class="btn-danger"  >TOTAL </b>
+            <p><b> Rs.{{x.price}}</b></p>   
+     
+        </div>                  
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+    <hr>
+    <div>
+      <h5 style="margin-left: 900px;">Total Amount: <span style="margin-left: 100px;font-weight: bold;">  Rs. {{total}}</span>   </h5>
+    </div>
+    <a href="/buying" class="btn btn-primary" style="width: 200px;margin-left: 1000px;margin-top: 40px;border-radius: 30px;font-weight: bold;">Shop more</a>
+    <a href="/checkout"><button class="btn btn-warning" style="width: 200px;margin-left: 1250px;margin-top:-60px;border-radius: 30px;font-weight: bold;">Checkout</button></a>
+  
+
+      <!--{% for x in data %}
+      {% if forloop.counter == 1 %}
+      <h5 style="background-color:lightgreen;color: black;text-align: center;height: 38px;" >Customer Details</h5>
+      <p><b>Name:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.uid.username}}</p>
+      <p><b>Email:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.uid.email}}</p>
+      {% endif %}
+      {% endfor %}-->
+    </div>
+    
+  </div>
+  
+   <!--End Main section-->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+<!--
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add a click event listener to the button
+    document.getElementById('quotationButton').addEventListener('click', function() {
+      // Show a SweetAlert with configuration
+      Swal.fire({
+        title: "SweetAlert2 is working!",
+        icon: "success",
+        showConfirmButton: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      }).then((result) => {
+        // Check if user clicked "OK"
+        if (result.isConfirmed) {
+          // Change button style to green
+          document.getElementById('quotationButton').style.backgroundColor = 'green';
+          // Change button text to "Quotation Sent"
+        document.getElementById('quotationButton').textContent = 'Quotation Sent';
+        document.getElementById('quotationButton').style.color = 'black';
+        document.getElementById('quotationButton').style.fontWeight = 'bold';
+        // Disable the button to prevent further clicks (optional)
+        document.getElementById('quotationButton').disabled = true;
+        // Hide the "Remove" button
+        document.getElementById('removeButton').style.display = 'none';
+        // Store the state in localStorage
+        localStorage.setItem('quotationSent', 'true');
+        }
+      });
+    });
+  }
+  
+
+  
+  );
+</script>-->
+{% endblock 'main' %}
+

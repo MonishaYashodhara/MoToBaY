@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block 'main' %}
+{% load static %}
+<!--Start Main section-->
+<div class="row m-4">
+    <div class="col-md-5">
+      <!--{% for x in data %}
+      {% if forloop.counter == 1 %}
+      <h5 class="text-white p-2" style="background-color:grey;text-align: center;">Customer Details</h5>
+      <p><b>Name:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.uid.username}}</p>
+      <p><b>Email:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.uid.email}}</p>
+      {% endif %}
+      {% endfor %}-->
+      <h5 class="text-white p-2" style="background-color:grey;text-align: center;">Your Order</h5>
+      {% for x in data %}
+      <div class="row">
+        <div class="col-md-6 mt-5">
+          <img src="{{x.pid.image.url}}" alt="" height="150px" width="">
+        </div>
+        <div class="col-md-6 mt-5" style="font-size: 12px; ">
+          
+          <p><b>Brand:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.pid.brand}}</p>
+          <p><b>Color:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.pid.color}}</p>
+          <p><b>Year:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.pid.Launch_Date}}</p>
+          <p><b>Price</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.pid.price}}</p>
+          <p><b>Qunatity</b>&nbsp;&nbsp;&nbsp;&nbsp;{{x.qty}}</p>
+          {% if x.pid.bcategory.name == 'Cars' %}
+
+           {% if not quotation_sent %}
+            <!-- Display "Send Quotation" button if quotation has not been sent -->
+            <button id="quotationButton{{ x.id }}" onclick="sendQuotation({{x.id}})">Send Quotation</button>
+            <a href="/remove/{{ x.id }}" class="btn btn-d btn-sm" id="removeButton">Remove</a><br>
+           {% else %}
+            <!-- Display "Quotation Sent" message if quotation has been sent -->
+            <p style="font-weight: bold; color: green;">Quotation Sent</p>
+           {% endif %}
+
+          <!--<button id="quotationButton" href="/sendquotaion/{{x.id}}">Send Quotation</button>-->
+            
+          
+         {% else %}
+          <a href="/remove/{{ x.id }}" class="btn btn-dark btn-sm" >Remove</a><br>
+         {% endif %}
+          
+      </div>
+    </div>
+      {% endfor %}
+      <hr>
+      <div>
+        <p style="margin-left: 100px;"><b>Total Amount :   </b>RS.{{total}}</p>
+      </div>
+    
+</div>
+<div class="col-md-7">
+  <h5 class="text-white p-2" style="background-color:grey;text-align: center;">Personal Details</h5>
+  <div class="card">
+    <div class="card-header">
+      Shipping Info
+    </div>
+    <div class="card-body">
+    
+     Name :  {{ shipping_form.shipping_full_name }}</br>
+     Email: {{ shipping_form.shipping_email }}<br/>
+     Address 1: {{ shipping_form.shipping_address1 }}<br/>
+    Address 2: {{ shipping_form.shipping_address2 }}<br/>
+    City: {{ shipping_form.shipping_city }}<br/>
+    State: {{ shipping_form.shipping_state }}<br/>
+    Zipcode: {{ shipping_form.shipping_zipcode }}<br/>
+    Country: {{ shipping_form.shipping_country }}<br/><br>
+    <a href="{% url 'checkout' %}" class="btn btn-outline-secondary">Update Shipping Details</a>
+    </div>
+  </div>
+  <!--<div class="card">
+    <div class="card-header">
+      Billing Info
+    </div>
+    <div class="card-body">
+    
+
+    </div>
+  </div>-->
+  <a href="/makepayment"><button  class="btn btn-primary mt-5 mx-10">Make payment</button></a>
+
+</div>
+<!--<div class="col-md-7">
+    <h5 class="bg-danger text-white p-2">Total amount</h5>
+    <p><b>Total({{items}} ):</b>Rs:{{total}}</p>
+    <hr>
+    <p><b>Total Amount:</b>RS.{{total}}</p>
+    <a href="/makepayment"><button class="btn btn-danger">Make payment</button></a>
+  </div>-->
+  </div>
+ 
+  
+   <!--End Main section-->
+
+{% endblock 'main' %}

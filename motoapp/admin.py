@@ -1,0 +1,33 @@
+from django.contrib import admin
+
+# Register your models here.
+
+from .models import Category,Sell,Bcategory,Buy,Profile,ShippingAddress,Request
+from django.contrib.auth.models import User
+
+admin.site.register(Category)
+admin.site.register(Sell)
+admin.site.register(Bcategory)
+admin.site.register(Buy)
+admin.site.register(Profile)
+admin.site.register(Request)
+
+# Mix profile info and user info
+class ProfileInline(admin.StackedInline):
+	model = Profile
+
+# Extend User Model
+class UserAdmin(admin.ModelAdmin):
+	model = User
+	field = ["username", "first_name", "last_name", "email"]
+	inlines = [ProfileInline]
+
+# Unregister the old way
+admin.site.unregister(User)
+
+# Re-Register the new way
+admin.site.register(User, UserAdmin)
+
+admin.site.register(ShippingAddress)
+
+

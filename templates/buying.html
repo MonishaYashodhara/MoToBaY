@@ -1,0 +1,105 @@
+{% include 'header.html' %}
+
+{% block 'main' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Used cars and bike</title>
+   
+</head>
+<body>
+  
+    <div class="row m-3">
+        <div class="col-md-2" style="background-color: whitesmoke">
+        
+ 
+          <div class="card">
+            <div class="card-header" style="background-color: rgb(76, 173, 211);color: white;font-weight: bolder;">
+              Filter by category
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+               <a href="{% url 'buying' %}?category={{category.name}}" style="text-decoration: none;color:rgb(71, 140, 167);font-weight: bolder;"> All</a>
+              </li>
+                <li class="list-group-item">
+               <a href="{% url 'buying' %}?bcategory=cars" style="text-decoration: none;color:rgb(71, 140, 167);font-weight: bolder;"> Cars</a>
+              </li>
+                <li class="list-group-item">
+               <a href="{% url 'buying' %}?bcategory=bikes" style="text-decoration: none;color:rgb(71, 140, 167);font-weight: bolder;"> Bike</a>
+              </li>
+              <li class="list-group-item">
+               <a href="{% url 'buying' %}?bcategory=bicycless" style="text-decoration: none;color:rgb(71, 140, 167);font-weight: bolder;">Bicycle</a> 
+              </li>
+               <li class="list-group-item">
+               <a href="{% url 'buying' %}?bcategory=kids" style="text-decoration: none;color:rgb(71, 140, 167);font-weight: bolder;">For Kids</a> 
+              </li>
+        
+            </ul>
+        <div>
+          <div class="card">
+            <div class="card-header" style="background-color: rgb(76, 173, 211);color:white;font-weight: bolder;">
+              Sort by price
+            </div>
+             <p style="margin-left: 15px;margin-top: 10px;"><a href="/sort/0" style="text-decoration: none;color:rgb(71, 140, 167);font-weight: bolder;">Low to High</a></p>
+             <p style="margin-left: 15px;margin-top: 10px;"><a href="/sort/1" style="text-decoration: none;color:rgb(71, 140, 167);font-weight: bolder;">High to Low</a></p>
+            </div>
+              <div class="card">
+              <div class="card-header" style="background-color: rgb(76, 173, 211);color:white;font-weight: bolder;">
+                Filter by Price
+              </div>
+      <form action="/range1" style="margin: 10px;">
+        <div class="mb-3">
+         <label for="input1" class="form-label"></label>
+         <input type="number" name="min"  id="input1" placeholder="Enter min amount" style="border-radius: 6px;border-color:silver;">
+        </div>
+        <div class="mb-3">
+          <label for="input2" class="form-label"> </label>
+          <input type="number" name="max" id="input2" placeholder="Enter max amount" style="border-radius: 6px;border-color:silver;">
+         </div>
+         <div class="mb-3">
+         <input type="submit" class="btn btn-outline-dark btn-sm" value="Apply" style="margin-left: 50PX;">             
+         </div>
+      </form>
+     
+    </div> 
+    
+        </div>
+        </div></div>
+        <div class="col-md-10">
+         <div class="row">
+            
+          {% for buy in buys %}
+            <div class="col-md-3">
+                <div class="card" style="background-color: whitesmoke;">
+                    <img src="{{buy.image.url}}" class="card-img-top" alt="..."  height="250px">
+                    <div class="card-body">
+                    
+                     <p class="card-text" style="font-weight:bold"> {{buy.brand}}</p>
+                     <p class="card-text" style="font-weight: bolder;color:green"> Rs. {{buy.price}} /- <small style="color:silver">onwards</small></p>
+                     <small>Mileage : {{buy.Mileage}}</small><br>
+                     <small>Fuel Type : {{buy.Fuel_Type}}</small><br>
+                     <small>Launch Date : {{buy.Launch_Date}}</small>
+                  
+                     <p><small></small></p>
+                    </div>
+                      <a href="{% url 'buy_details' buy.id  %}" class="btn btn- btn-primary sm m-1" style="border-radius: 15px;"> View Details</a>                   
+                  </div>
+            </div>
+            {% empty %}
+            <h3>NO photos...</h3>
+            {% endfor %}
+        
+            
+         
+
+         </div>
+            
+        </div>
+    </div>
+   
+</body>
+</html>
+{% endblock %}
